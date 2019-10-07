@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa:500|Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="stars"></div>
+<div class="twinkling"></div>
+<div class="clouds"></div>
+
+
+<style>
+
+body{
+margin:0;
+padding:0;
+}
+
+.header{
+color:white;
+font-size:300%;
+font-weight:bold;
+font-family: 'Grenze', serif;
+z-index:-1;
+}
+
+.column {
+  float: left;
+  width: 10%;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.odd, .even{
+transform:translate(0,-60px);
+animation:move 20s linear;
+animation-iteration-count: infinite;
+}
+
+.odd{
+animation-delay:4s;
+}
+
+.even{
+animation-delay:8s;
+}
+
+.zero{
+animation-delay:12s;
+}
+
+@keyframes move{
+  100% { transform: translate(0, 600px)}
+}
+
+
+.laser{
+  margin:auto;
+  width: 5px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 50px #EB2222,
+    inset 20px 0 80px #f0f,
+    inset -20px 0 80px #0ff,
+    inset 20px 0 300px #f0f,
+    inset -20px 0 300px #0ff,
+    0 0 50px #EB2222,
+    -10px 0 80px #f0f,
+    10px 0 80px #0ff;
+}
+
+#player2{
+	width: 50px;
+    position:absolute;
+	bottom:70px;
+    left: 50%;
+	visibility: hidden;
+}
+
+#rocket{
+	width:50px;
+}
+
+#player{
+	width: 50px;
+    position:absolute;
+	bottom:40px;
+    left: 50%;
+	/*border: 1px solid yellow;*/
+}
+
+#player i{
+	width: 30px;
+    height: 30px;
+    color: skyblue;
+    transform: rotate(-90deg);
+	z-index: 100000000;
+}
+
+.score-tab{
+	position: absolute;
+	right:20px;
+	top:0;
+	color:white;
+	font-family: 'Anton';
+	font-size: 50px;
+}
+
+.border{
+	border: 1px solid yellow;
+}
+
+
+</style>
+
+<audio id="myAudio">
+  <source src="PM_FSSF2_WEAPONS_D1_SHOT_323.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<div class="row">
+  <div class="column">
+    <img class="odd aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="even aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="zero aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="odd aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="even aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="zero aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="odd aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+  <div class="column">
+    <img class="even aliens" src="alien.svg" height="60px" width="60px">
+  </div>
+</div>
+
+<div id="player2">
+	<div>
+		<div class='laser'></div>
+	</div>
+</div>
+<div id="player">
+	<div>
+		<img id="rocket" src="rocket.svg" />
+	</div>
+</div>
+<div class="score-tab">
+SCORE : <span id="score">0</span>
+</div>
+
+<script>
+
+let pos = 0;
+let score = 0;
+function move(keycode){
+	let speed = 1
+	if(keycode == 37){
+		pos -= speed;
+		document.getElementById("player").style.marginLeft = pos+"px";
+		document.getElementById("player2").style.marginLeft = pos+"px";
+		//console.log("left");
+	}
+	else if(keycode == 39){
+		pos += speed;
+		//console.log(pos);
+    	document.getElementById("player").style.marginLeft = pos+"px";
+		document.getElementById("player2").style.marginLeft = pos+"px";
+	}
+}
+
+
+function revert_fire(){
+	document.getElementsByClassName("laser")[0].style.height = "30px";
+	document.getElementById("player2").style.visibility = "hidden";
+}
+
+function get_aliens_cords(){
+	var arr = new Array()
+	var aliens = document.getElementsByClassName('aliens');
+	for(var i = 0; i < aliens.length; i++){
+		arr.push([Math.round(aliens[i].getBoundingClientRect().x),Math.round(aliens[i].getBoundingClientRect().x + (aliens[i].width))]);
+	}
+	return arr;
+}
+
+
+function fire(){
+	document.getElementById("player2").style.visibility = "visible";
+	document.getElementsByClassName("laser")[0].style.height = window.innerHeight+"px";
+	//document.getElementsByClassName("laser")[0].style.height = 50+"px";
+	document.getElementById("myAudio").play();
+	//console.log("Laser x position"+document.getElementsByClassName('laser')[0].getBoundingClientRect().x);
+	//console.log("Laser y position "+document.getElementsByClassName('laser')[0].getBoundingClientRect().y);
+	
+	cords = get_aliens_cords();
+	if(cords.includes(Math.round(document.getElementsByClassName('laser')[0].getBoundingClientRect().x))){
+		console.log("collision");
+		score += 10;
+		document.getElementById('score').innerHTML = score;
+	}
+	else{
+		console.log(Math.round(document.getElementsByClassName('laser')[0].getBoundingClientRect().x));
+		console.log(cords);
+	}
+}
+
+
+document.addEventListener("keydown", function (e){
+	if(e.keyCode == 32){
+		fire();
+		window.setTimeout(function() { revert_fire() }, 100);
+	}
+});
+
+document.addEventListener("keydown", function (e){
+	move(e.keyCode);
+});
+</script> 
+
+ <script src="https://kit.fontawesome.com/9223551097.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+  <script type="text/javascript" src="scripts/moment.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+  <script type="text/javascript" src="scripts/admin.actions.js"></script>
+</body>
+</html>
