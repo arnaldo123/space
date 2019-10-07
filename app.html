@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="stylesheets/cust-style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa:500|Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+</head>
+
+<body style="background:black;">
+
+<style>
+
+#player{
+	width: 50px;
+    height: 50px;
+    position:absolute;
+	bottom:10px;
+    left: 50%;
+}
+
+#player i{
+	width: 30px;
+    height: 30px;
+    color: skyblue;
+    transform: rotate(-90deg);
+}
+</style>
+
+<div id="player">
+	<i class="fas fa-fighter-jet fa-3x"></i>
+</div>
+
+<script>
+
+let pos = 0;
+
+function move(keycode){
+	if(keycode == 37){
+		pos -= 5;
+		document.getElementById("player").style.marginLeft = pos+"px";
+		console.log("left");
+	}
+	else if(keycode == 39){
+		pos += 5;
+		console.log(pos)
+    	document.getElementById("player").style.marginLeft = pos+"px";
+	}
+}
+
+document.addEventListener("keydown", function (e){
+	move(e.keyCode);
+});
+</script> 
+
+ <script src="https://kit.fontawesome.com/9223551097.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+  <script type="text/javascript" src="scripts/moment.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+  <script type="text/javascript" src="scripts/admin.actions.js"></script>
+</body>
+</html>
